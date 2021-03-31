@@ -1,0 +1,13 @@
+.wrapper {
+    box-sizing: border-box;
+    padding: 0.5em;
+    width: 216px;
+    height: 216px;
+
+    background-color: #203a43;
+    border-radius: 1.5em;
+}
+
+.row {
+    display: flex;
+}
