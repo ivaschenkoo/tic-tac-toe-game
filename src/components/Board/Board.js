@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './Board.module.css'
 import Cell from "../Cell/Cell";
 
 
 const Board = (props) => {
 
+    useEffect(() => {
+        if (props.moveNumber % 2 === 0 && props.mode === 'pvb' && props.gameStatus === 'during') {
+            props.makeBotMove()
+        }
+    }, [props.gameStatus, props.moveNumber])
 
     const renderCell = (index) => {
         return <Cell key={index} index={index} value={props.cells[index]} makeMove={props.makeMove} />

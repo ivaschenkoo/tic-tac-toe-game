@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 const GameMenu = (props) => {
     return (
         <article className={styles.wrapper}>
-            <img src={ticTacToe} alt="tic-tac-toe game" width='150px' height='auto'/>
+            <img src={ticTacToe} className={styles.image} alt="tic-tac-toe game"/>
             <div className={styles.linkWrapper}>
                 <NavLink to='/game/pvp' className={styles.link}>player vs player</NavLink>
                 <NavLink to='/game/pvb' className={styles.link}>player vs bot</NavLink>

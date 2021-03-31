@@ -64,6 +64,20 @@
 }
 
 .link {
+    margin-top: 0.5em;
+
     color: #0f2027;
     text-transform: uppercase;
+}
+
+@media screen and (max-width: 426px) {
+    .form input[type='text'] {
+        height: 40px;
+
+        font-size: 1.25em;
+    }
+
+    .button {
+        font-size: 1.25em;
+    }
 }

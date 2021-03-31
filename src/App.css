@@ -4,3 +4,15 @@
     width: 100vw;
     height: 100vh;
 }
+
+.link {
+    margin: 0 auto;
+    padding: 1em 2em;
+
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    border-radius: 2em;
+}

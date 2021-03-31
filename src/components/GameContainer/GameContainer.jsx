@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import GameInit from "./GameInit/GameInit";
 import Game from "../Game/Game";
 import {withRouter} from "react-router-dom";
-import {botMove} from "../common/BotLogic";
+import {botMove} from "../common/botLogic";
 
 
 const GameContainer = (props) => {
@@ -26,34 +26,14 @@ const GameContainer = (props) => {
         [2, 4, 6],
     ];
 
-    useEffect(() => {
-        checkWin()
-    }, [moveNumber])
-
-    const makeMove = (index) => {
-        if (cells[index] === ' ') {
-            setCell((prevState) => {
-                prevState[index] = currentItem;
-                return [...prevState]
-            })
-            setMoveNumber(moveNumber + 1)
-        }
-    }
-
-    if (mode === 'pvb') {
-        if (moveNumber % 2 === 0) {
-            botMove(cells, winOptions, makeMove, players)
-        }
-    }
-
-    const checkWin = () => {
+    const checkWin = (newCells) => {
         for (let i = 0; i < winOptions.length; i++) {
             let [a, b, c] = winOptions[i];
-            if (cells[a] !== ' ' && (cells[a] === cells[b]) && (cells[a] === cells[c])) {
-                setGameStatus(`${cells[a]} wins`);
+            if (newCells[a] !== ' ' && (newCells[a] === newCells[b]) && (newCells[a] === newCells[c])) {
+                setGameStatus(`${newCells[a]} wins`);
                 setPlayers(prevState => {
                     let newState;
-                    if (players.firstPlayer.item === cells[a]) {
+                    if (players.firstPlayer.item === newCells[a]) {
                         newState = {
                             ...prevState,
                             firstPlayer: {...prevState.firstPlayer, wins: prevState.firstPlayer.wins + 1},
@@ -70,9 +50,24 @@ const GameContainer = (props) => {
                 return true
             }
         }
-        if (moveNumber === 10) {
+        if (moveNumber === 9) {
             setGameStatus('draw');
         }
+        setMoveNumber(moveNumber + 1)
+    }
+
+    const makeMove = (index) => {
+        if (cells[index] === ' ') {
+            let newCells = [...cells];
+            newCells.splice(index, 1, currentItem)
+            setCell(newCells)
+            checkWin(newCells)
+        }
+    }
+
+    const makeBotMove = () => {
+        let index = botMove(cells, winOptions, players);
+        makeMove(index);
     }
 
     const playAgain = () => {
@@ -87,14 +82,13 @@ const GameContainer = (props) => {
 
     return <Game mode={mode}
                  gameStatus={gameStatus}
-                 setGameStatus={setGameStatus}
                  players={players}
                  cells={cells}
                  currentItem={currentItem}
                  moveNumber={moveNumber}
-                 setMoveNumber={setMoveNumber}
                  makeMove={makeMove}
-                 playAgain={playAgain} />
+                 makeBotMove={makeBotMove}
+                 playAgain={playAgain}/>
 }
 
 export default withRouter(GameContainer)

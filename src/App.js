@@ -2,13 +2,13 @@ import React from 'react';
 import './App.css';
 import GameMenu from "./components/GameMenu/GameMenu";
 import {Route} from "react-router-dom";
-import GameContainer from "./components/GameLogic/GameContainer";
+import GameContainer from "./components/GameContainer/GameContainer";
 
 
 const App = (props) => {
     return (
         <div className="wrapper">
-            <Route path="/" render={() => <GameMenu />} />
+            <Route exact path="/" render={() => <GameMenu />} />
             <Route path="/game/:gamestatus?" render={() => <GameContainer /> } />
         </div>
     );
